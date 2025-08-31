@@ -93,6 +93,36 @@
         dots: true,
         nav: false,
     });
+
+    // >>>>> VALIDACIÓN DE FORMULARIO DE CONTACTO (Versión Mejorada con SweetAlert2) <<<<<
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function (event) {
+        const emailInput = document.getElementById('email');
+        const emailValue = emailInput.value.toLowerCase();
+        
+        const forbiddenDomains = [
+            '@gmail.', '@hotmail.', '@yahoo.', '@outlook.', '@aol.', '@live.', '@msn.'
+        ];
+
+        const isForbidden = forbiddenDomains.some(domain => emailValue.includes(domain));
+
+        if (isForbidden) {
+            // Prevenimos el envío del formulario
+            event.preventDefault();
+            
+            // ¡Aquí está la magia! Mostramos la ventana bonita
+            Swal.fire({
+                icon: 'error',
+                title: 'Email no válido',
+                text: 'Para consultas comerciales, por favor utilice un correo electrónico corporativo.',
+                footer: 'No se aceptan dominios como @gmail, @hotmail, etc.',
+                confirmButtonText: 'Entendido',
+                confirmButtonColor: '#6534AC' // Usamos el color primario de tu CSS
+            });
+        }
+    });
+}
     
 })(jQuery);
 
